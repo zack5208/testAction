@@ -10,6 +10,8 @@ import sys
 token = os.getenv('token', None)
 owner = os.getenv('owner', None)
 repo = os.getenv('repo', None)
+
+print(os.environ)
 print( "owner : "+ owner)
 print( "repo : "+ repo)
 url_get_release_latest_tag = "https://api.github.com/repos/" + owner + "/"+ repo + "/releases/latest"

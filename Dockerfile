@@ -14,6 +14,7 @@ COPY . .
 #CMD [ "python3", "/app/app.py" ]
 run echo $owner
 
+RUN chmod +x /app/app.py
 ENTRYPOINT ["/app/app.py"]
 
 #CMD tail -f /dev/null
