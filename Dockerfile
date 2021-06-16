@@ -13,4 +13,4 @@ COPY . .
 #RUN chmod +x /app.py
 CMD [ "python3", "/app/app.py" ]
 
-CMD tail -f /dev/null
+#CMD tail -f /dev/null
