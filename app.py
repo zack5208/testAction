@@ -9,9 +9,9 @@ import sys
 ##################################################
 #var
 ##################################################
-token = os.getenv('token', None)
-owner = os.getenv('owner', None)
-repo = os.getenv('repo', None)
+token = os.getenv('INPUT_TOKEN', None)
+owner = os.getenv('INPUT_OWNER', None)
+repo = os.getenv('INPUT_REPO', None)
 
 print(os.environ)
 print( "owner : "+ owner)
