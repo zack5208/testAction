@@ -1,0 +1,22 @@
+name: 'testing'
+description: 'test download zip files'
+inputs:
+  token:  # id of input
+    description: 'token'
+    required: false
+  owner:  # id of input
+    description: 'owner'
+    required: true    
+  repo:  # id of input
+    description: 'repo'
+    required: true    
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.token }}
+    - ${{ inputs.owner }}
+    - ${{ inputs.repo }}
