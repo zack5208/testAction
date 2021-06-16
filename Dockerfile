@@ -9,7 +9,7 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-CMD ["echo $INPUT_TOKEN"]
+RUN echo $INPUT_TOKEN
 
 #CMD [ "python3", "app.py" ]
 
