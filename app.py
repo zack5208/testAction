@@ -7,9 +7,9 @@ import sys
 ##################################################
 #var
 ##################################################
-token = sys.argv[1]
-owner = sys.argv[2]
-repo = sys.argv[3]
+token = os.getenv('token', None)
+owner = os.getenv('owner', None)
+repo = os.getenv('repo', None)
 url_get_release_latest_tag = "https://api.github.com/repos/" + owner + "/"+ repo + "/releases/latest"
 url_download_release_latest = "https://github.com/" + owner + "/"+ repo + "/archive/"
 
@@ -32,4 +32,3 @@ dataObj = json.loads( data.content )
 print(dataObj)
 latestTag = dataObj[ 'tag_name' ]
 download_url( url_download_release_latest + '/' + latestTag + '.zip', os.getcwd()+'/' +latestTag + '.zip')
-print ('Argument List: '+ str(sys.argv))

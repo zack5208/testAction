@@ -11,6 +11,6 @@ COPY . .
 
 #RUN echo $1
 
-#CMD [ "python3", "app.py" ]
+CMD [ "python3", "app.py" ]
 
 #CMD tail -f /dev/null
