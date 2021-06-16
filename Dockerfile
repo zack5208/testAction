@@ -9,7 +9,7 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-RUN echo $1
+#RUN echo $1
 
 #CMD [ "python3", "app.py" ]
 
