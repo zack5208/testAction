@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import requests
-from requests.auth import HTTPBasicAuth
+#from requests.auth import HTTPBasicAuth
 import json
 import os
-import sys
+#import sys
 
 ##################################################
 #var
@@ -44,5 +44,6 @@ download_url( src_download_file_path , dst_download_file_path )
 # check file exists
 if os.path.exists(dst_download_file_path):
     print( "File exists: " + dst_download_file_path )
+    print( "File size (bytes): " + os.path.getsize(dst_download_file_path))
 else:
     print( "File dose not exist: " + dst_download_file_path )
