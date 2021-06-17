@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 
 import requests
-#from requests.auth import HTTPBasicAuth
 import json
 import os
-#import sys
+import logging
+import boto3
+from botocore.exceptions import ClientError
 
 ##################################################
 #var
 ##################################################
 token = os.getenv('INPUT_TOKEN', None)
-owner = os.getenv('INPUT_OWNER', None)
 repo = os.getenv('INPUT_REPO', None)
+ACCESS_KEY = os.getenv('INPUT_AWS_SECRET_KEY_ID', None)
+SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
+SESSION_TOKEN = os.getenv('INPUT_AWS_SESSION_TOKEN', None)
+s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
+url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
+url_download_release_latest = "https://github.com/" + repo + "/archive/"
 
-print(os.environ)
-print( "owner : "+ owner)
-print( "repo : "+ repo)
-url_get_release_latest_tag = "https://api.github.com/repos/" + owner + "/"+ repo + "/releases/latest"
-url_download_release_latest = "https://github.com/" + owner + "/"+ repo + "/archive/"
 
 ##################################################
 #helper functions
@@ -28,22 +29,55 @@ def download_url( url , save_path, chunk_size=128 ):
         for chunk in r.iter_content( chunk_size = chunk_size ):
             fd.write( chunk )
 
+def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_name=None,):
+    """Upload a file to an S3 bucket
+
+    :param file_name: File to upload
+    :param bucket: Bucket to upload to
+    :param object_name: S3 object name. If not specified then file_name is used
+    :return: True if file was uploaded, else False
+    """
+
+    # If S3 object_name was not specified, use file_name
+    if object_name is None:
+        object_name = file_name
+
+    # Upload the file
+    s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY,
+    aws_session_token=SESSION_TOKEN)
+    try:
+        response = s3_client.upload_file(file_name, bucket, object_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True            
+
 ##################################################
 #Script start here
 ##################################################
-print(url_get_release_latest_tag)
-print(url_download_release_latest)
+
+# Get the last file name
 data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
 dataObj = json.loads( data.content )
-print(dataObj)
 latestTag = dataObj[ 'tag_name' ]
 download_file_name = latestTag + '.zip'
+
+# download the file to docker host
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
 src_download_file_path = url_download_release_latest + '/' + download_file_name
 download_url( src_download_file_path , dst_download_file_path )
-# check file exists
+
+# check file exists in the docker host
 if os.path.exists(dst_download_file_path):
     print( "File exists: " + dst_download_file_path )
     print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
 else:
     print( "File dose not exist: " + dst_download_file_path )
+
+# Upload zip file to S3
+
+if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,download_file_name ):
+    print ("Upload Successful!")
+else:
+    print("Upload fail!")    
