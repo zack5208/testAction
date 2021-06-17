@@ -37,4 +37,12 @@ data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 
 dataObj = json.loads( data.content )
 print(dataObj)
 latestTag = dataObj[ 'tag_name' ]
-download_url( url_download_release_latest + '/' + latestTag + '.zip', os.getcwd()+'/' +latestTag + '.zip')
+download_file_name = latestTag + '.zip'
+dst_download_file_path = os.getcwd()+ '/' + download_file_name
+src_download_file_path = url_download_release_latest + '/' + download_file_name
+download_url( src_download_file_path , dst_download_file_path )
+# check file exists
+if os.path.exists(dst_download_file_path):
+    print( "File exists: " + dst_download_file_path )
+else:
+    print( "File dose not exist: " + dst_download_file_path )
