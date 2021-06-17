@@ -19,7 +19,7 @@ s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
 url_download_release_latest = "https://github.com/" + repo + "/archive/"
 
-
+print(os.environ)
 ##################################################
 #helper functions
 ##################################################
