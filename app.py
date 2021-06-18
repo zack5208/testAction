@@ -66,6 +66,7 @@ if repo == None:
 
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
 url_download_release_latest = "https://github.com/" + repo + "/archive/"
+print (url_get_release_latest_tag)
 # Get the lastest version
 if version == None:
     data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
