@@ -10,7 +10,7 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 
 ### `repo`
 
-**Required** The `org/repo` containing the release. 
+The `org/repo` containing the release. Defaults to the current repo.
 
 ### `aws_access_key_id`
 
@@ -24,18 +24,28 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 
 **Required** The AWS credential. For example, this should be `${{ secrets.aws_session_token}` Please refer to https://docs.github.com/en/actions/reference/encrypted-secrets
 
+### `s3_bucket`
+
+**Required** The S3 bucket's name 
+
+### `version`
+
+The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
+Defaults is point to the latest release version zip file.
+
 
 ## Example usage
 
 ```yaml
 uses: zack5208/testAction@master
 with:
-  repo: "zack5208/testAction"
-  token: ${{ secrets.GITHUB_TOKEN }}
-  aws_access_key_id: ${{ secrets.aws_access_key_id}}
-  aws_secret_access_key: ${{ secrets.aws_secret_access_key}
-  aws_session_token: ${{ secrets.aws_session_token}
-  s3_bucket: "bucket_name"
+  repo: "zack5208/testAction" # Optional  Default: this calling repo
+  token: ${{ secrets.GITHUB_TOKEN }} # Required
+  aws_access_key_id: ${{ secrets.aws_access_key_id}} # Required
+  aws_secret_access_key: ${{ secrets.aws_secret_access_key} # Required
+  aws_session_token: ${{ secrets.aws_session_token} # Required
+  s3_bucket: "bucket_name" # Required
+  tag_version_file:  "v1" # optional  Default: the lastest version
 ```
 
 ## Support
