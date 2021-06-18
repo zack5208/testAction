@@ -8,7 +8,7 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 
 **Required** The GitHub token. Typically this will be `${{ secrets.GITHUB_TOKEN }}`
 
-### `repo`
+### `src_repo`
 
 The `org/repo` containing the release. Defaults to the current repo.
 
