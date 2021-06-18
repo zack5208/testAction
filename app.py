@@ -71,12 +71,13 @@ url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases
 url_download_release_latest = "https://github.com/" + repo + "/archive/"
 print (url_get_release_latest_tag)
 # Get the lastest version
-if version == "":
+if version == None:
     data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
     dataObj = json.loads( data.content )
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
 print (version)
+print (type(version))
 download_file_name = version + '.zip'
 
 # download the file to docker host
