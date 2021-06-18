@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 #var
 ##################################################
 token = os.getenv('INPUT_TOKEN', None)
-repo = os.getenv('INPUT_REPO', None)
+repo = os.getenv('INPUT_SRC_REPO', None)
 default_repo = os.getenv('GITHUB_REPOSITORY', None)
 ACCESS_KEY = os.getenv('INPUT_AWS_ACCESS_KEY_ID', None)
 SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
@@ -61,7 +61,7 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
 #print("repo: " + repo)
 print("default repo: " + default_repo)
 
-if repo == "":
+if repo == None:
     repo = default_repo
 print (type(repo))
 print (repo == None)
