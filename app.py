@@ -76,8 +76,8 @@ if version == "":
     dataObj = json.loads( data.content )
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
-download_file_name = version + '.zip'
 print (version)
+download_file_name = version + '.zip'
 
 # download the file to docker host
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
