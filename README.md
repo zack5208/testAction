@@ -28,7 +28,7 @@ The `org/repo` containing the release. Defaults to the current repo.
 
 **Required** The S3 bucket's name 
 
-### `version`
+### `tag_version_file`
 
 The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
 Defaults is point to the latest release version zip file.
@@ -39,7 +39,7 @@ Defaults is point to the latest release version zip file.
 ```yaml
 uses: zack5208/testAction@master
 with:
-  repo: "zack5208/testAction" # Optional  Default: this calling repo
+  src_repo: "zack5208/testAction" # Optional  Default: this calling repo
   token: ${{ secrets.GITHUB_TOKEN }} # Required
   aws_access_key_id: ${{ secrets.aws_access_key_id}} # Required
   aws_secret_access_key: ${{ secrets.aws_secret_access_key} # Required
