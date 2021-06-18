@@ -12,7 +12,7 @@ from botocore.exceptions import ClientError
 ##################################################
 token = os.getenv('INPUT_TOKEN', None)
 repo = os.getenv('INPUT_REPO', None)
-ACCESS_KEY = os.getenv('INPUT_AWS_SECRET_KEY_ID', None)
+ACCESS_KEY = os.getenv('INPUT_AWS_ACCESS_KEY_ID', None)
 SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
 SESSION_TOKEN = os.getenv('INPUT_AWS_SESSION_TOKEN', None)
 s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
