@@ -63,6 +63,9 @@ print("default repo: " + default_repo)
 
 if repo == None:
     repo = default_repo
+print (type(repo))
+print (repo == None)
+print (repo)
 
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
 url_download_release_latest = "https://github.com/" + repo + "/archive/"
