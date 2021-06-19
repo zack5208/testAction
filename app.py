@@ -63,9 +63,9 @@ print("default repo: " + default_repo)
 
 if repo == None:
     repo = default_repo
-print (type(repo))
-print (repo == None)
-print (repo)
+    print ("Use default repo ")
+
+print (" Download from this repo: "+ repo)
 
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
 url_download_release_latest = "https://github.com/" + repo + "/archive/"
@@ -76,23 +76,26 @@ if version == None:
     dataObj = json.loads( data.content )
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
-print (version)
-print (type(version))
+    print ( "Get the lastest release version: " + version)
+
 download_file_name = version + '.zip'
 
-# download the file to docker host
+# download the file to docker container
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
 src_download_file_path = url_download_release_latest + '/' + download_file_name
+print(" docker container download from this url: " + src_download_file_path )
 download_url( src_download_file_path , dst_download_file_path )
 
-# check file exists in the docker host
+
+# check file exists in the docker container
+print ("Check file exist in docker container...")
 if os.path.exists(dst_download_file_path):
     print( "File exists: " + dst_download_file_path )
     print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
     # Upload zip file to S3
     repo_name_arr = repo.split("/")
     #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
-    file_object_name = repo_name_arr[0] + "/" + repo_name_arr[1] + "-" + download_file_name  
+    file_object_name = repo_name_arr[1] + "/" + download_file_name  
     if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
         print ("Upload Successful!")
     else:
