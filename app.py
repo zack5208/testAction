@@ -45,11 +45,11 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
         object_name = file_name
 
     # Upload the file
-    s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-    aws_session_token=SESSION_TOKEN)
     #s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-    #aws_secret_access_key=SECRET_KEY)
+    #aws_secret_access_key=SECRET_KEY,
+    #aws_session_token=SESSION_TOKEN)
+    s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY)
     try:
         response = s3_client.upload_file(file_name, bucket, object_name)
     except ClientError as e:
@@ -104,6 +104,7 @@ if os.path.exists(dst_download_file_path):
         print ("Upload fail!")    
 else:
     print( "File dose not exist: " + dst_download_file_path )
+
 
 
 
