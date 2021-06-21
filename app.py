@@ -45,9 +45,6 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
         object_name = file_name
 
     # Upload the file
-    #s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-    #aws_secret_access_key=SECRET_KEY,
-    #aws_session_token=SESSION_TOKEN)
     s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
     aws_secret_access_key=SECRET_KEY)
     try:
@@ -96,8 +93,8 @@ if os.path.exists(dst_download_file_path):
     print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
     # Upload zip file to S3
     repo_name_arr = repo.split("/")
-    #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
-    file_object_name = repo_name_arr[1] + "/" + download_file_name  
+    file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
+    #file_object_name = repo_name_arr[1] + "/" + download_file_name  
     if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
         print ("Upload Successful!")
     else:
