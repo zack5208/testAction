@@ -77,6 +77,7 @@ print (url_get_release_latest_tag)
 if version == None:
     data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
     dataObj = json.loads( data.content )
+    print("url_get_release_latest_tag data obj:" + str(dataObj))
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
     print ( "Get the lastest release version: " + version)
@@ -98,7 +99,8 @@ if os.path.exists(dst_download_file_path):
     # Upload zip file to S3
     repo_name_arr = repo.split("/")
     #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
-    file_object_name = repo_name_arr[1] + "/" + download_file_name  
+    file_object_name = repo_name_arr[1] + "/" + download_file_name
+    print("file_object_name: "+  file_object_name )  
     if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
         print ("Upload Successful!")
     else:
