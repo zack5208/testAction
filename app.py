@@ -72,7 +72,9 @@ try:
 
     # Get version
     if version == None:
+        print("Get version from this url :"+ url_get_release_latest_tag)
         r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
+        print("status code: "+ str(r.status_code))
         r.raise_for_status()
         dataObj = json.loads( r.content )
         print("url_get_release_latest_tag data obj:" + str(dataObj))
