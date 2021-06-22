@@ -10,7 +10,7 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 
 ### `src_repo`
 
-The `org/repo` containing the release. Defaults to the current repo.
+**Optional** The `org/repo` containing the release. Defaults is the current repo.
 
 ### `aws_access_key_id`
 
@@ -25,11 +25,10 @@ The `org/repo` containing the release. Defaults to the current repo.
 **Required** The S3 bucket's name 
 
 ### `s3_bucket_folder` 
-The S3 bucket folder name 
+**Optional** the S3 bucket folder name 
 
 ### `version`
-
-The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
+**Optional** The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
 Defaults is point to the latest release version zip file.
 
 
