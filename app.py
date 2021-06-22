@@ -73,7 +73,7 @@ if repo == None:
 print (" Download from this repo: "+ repo)
 
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
-url_download_release_latest = "https://github.com/" + repo + "/archive/"
+url_download_release_latest = "https://github.com/" + repo + "/archive"
 print (url_get_release_latest_tag)
 # Get the lastest version
 if version == None:
