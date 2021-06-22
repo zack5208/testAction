@@ -27,9 +27,9 @@ print(os.environ)
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
     r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
+    print("Downloard from this ur : " + url)
     print("status code: "+ str(r.status_code))
     r.raise_for_status()
-    print("Downloard from this ur : " + url)
     with open( save_path , 'wb' ) as fd:
         for chunk in r.iter_content( chunk_size = chunk_size ):
             fd.write( chunk )
@@ -90,6 +90,8 @@ download_file_name = version + '.zip'
 # download the file to docker container
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
 src_download_file_path = url_download_release_latest + '/' + download_file_name
+print("dst: "+ dst_download_file_path )
+print("src: "+ src_download_file_path)
 print("Docker container download from this url: " + src_download_file_path )
 download_url( src_download_file_path , dst_download_file_path )
 
