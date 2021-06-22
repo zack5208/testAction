@@ -4,9 +4,9 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 
 ## Inputs
 
-### `token`
+### `token` **Required** 
 
-**Required** The GitHub token. Typically this will be `${{ secrets.GITHUB_TOKEN }}`
+The GitHub token. Typically this will be `${{ secrets.GITHUB_TOKEN }}`
 
 ### `src_repo`
 
@@ -25,7 +25,7 @@ This action downloads an asset (zip file) from a GitHub release and upload the z
 **Required** The S3 bucket's name 
 
 ### `s3_bucket_folder` 
-**Optional** the S3 bucket folder name 
+**Optional** The S3 bucket folder name 
 
 ### `version`
 **Optional** The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
