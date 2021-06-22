@@ -16,7 +16,6 @@ version = os.getenv('INPUT_VERSION', None)
 default_repo = os.getenv('GITHUB_REPOSITORY', None)
 ACCESS_KEY = os.getenv('INPUT_AWS_ACCESS_KEY_ID', None)
 SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
-SESSION_TOKEN = os.getenv('INPUT_AWS_SESSION_TOKEN', None)
 s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
 s3_bucket_folder =  os.getenv('INPUT_S3_BUCKET_FOLDER', None)
 
@@ -28,15 +27,14 @@ print(os.environ)
 #helper functions
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
-#    r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
-    r = requests.get( url, stream = True)
+    r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
     print("status code: "+ str(r.status_code))
     r.raise_for_status()
     with open( save_path , 'wb' ) as fd:
         for chunk in r.iter_content( chunk_size = chunk_size ):
             fd.write( chunk )
 
-def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_name=None,):
+def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY, object_name=None,):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
@@ -50,9 +48,6 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
         object_name = file_name
 
     # Upload the file
-    #s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-    #aws_secret_access_key=SECRET_KEY,
-    #aws_session_token=SESSION_TOKEN)
     s3_client = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
     aws_secret_access_key=SECRET_KEY)
     try:
@@ -113,7 +108,7 @@ try:
             file_object_name = s3_bucket_folder + "/" + repo_name_arr[1] + "/" + download_file_name    
         print("file_object_name: "+  file_object_name )  
         print("Upload to s3_bucket: "+ s3_bucket)
-        if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
+        if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,file_object_name):
             print ("Upload Successful!")
         else:
             print ("Upload fail!")    
