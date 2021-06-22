@@ -24,6 +24,9 @@ The `org/repo` containing the release. Defaults to the current repo.
 
 **Required** The S3 bucket's name 
 
+### `s3_bucket_folder` 
+The S3 bucket folder name 
+
 ### `version`
 
 The version of file need to upload to S3 bucket. For example, the download url is https://github.com/zack5208/testAction/archive/refs/tags/v1.zip . This will be `v1`
@@ -39,9 +42,9 @@ with:
   token: ${{ secrets.GITHUB_TOKEN }} # Required
   aws_access_key_id: ${{ secrets.aws_access_key_id}} # Required
   aws_secret_access_key: ${{ secrets.aws_secret_access_key} # Required
-  aws_session_token: ${{ secrets.aws_session_token} # Required
   s3_bucket: "bucket_name" # Required
-  version:  "v1" # optional  Default: the lastest version
+  s3_bucket_folder: "bucket_folder_name" #Optional 
+  version:  "v1" # Optional  Default: the lastest version
 ```
 
 ## Support
