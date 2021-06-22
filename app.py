@@ -27,7 +27,7 @@ print(os.environ)
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
     r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
-    print("status code: "+r.status_code)
+    print("status code: "+ str(r.status_code))
     r.raise_for_status()
     print("Downloard from this ur : " + url)
     with open( save_path , 'wb' ) as fd:
