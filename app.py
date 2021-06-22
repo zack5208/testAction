@@ -63,9 +63,6 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
 ##################################################
 #Script start here
 ##################################################
-#print("repo: " + repo)
-print("default repo: " + default_repo)
-
 if repo == None:
     repo = default_repo
     print ("Use default repo ")
@@ -85,6 +82,8 @@ if version == None:
     version = latestTag
     print ( "Get the lastest release version: " + version)
     zipball_url = dataObj[ 'zipball_url' ] 
+else:
+    zipball_url = "https://api.github.com/repos/" + repo + "/zipball/" + version
 
 download_file_name = version + '.zip'
 
@@ -92,9 +91,8 @@ download_file_name = version + '.zip'
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
 #src_download_file_path = url_download_release_latest + '/' + download_file_name
 src_download_file_path = zipball_url
-print("dst: "+ dst_download_file_path )
-print("src: "+ src_download_file_path)
 print("Docker container download from this url: " + src_download_file_path )
+print("Download file to this path in docker container: "+ dst_download_file_path )
 download_url( src_download_file_path , dst_download_file_path )
 
 
