@@ -27,8 +27,9 @@ print(os.environ)
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
     r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
+    print("status code: "+r.status_code)
+    r.raise_for_status()
     print("Downloard from this ur : " + url)
-    print (str(r))
     with open( save_path , 'wb' ) as fd:
         for chunk in r.iter_content( chunk_size = chunk_size ):
             fd.write( chunk )
@@ -76,8 +77,9 @@ url_download_release_latest = "https://github.com/" + repo + "/archive/"
 print (url_get_release_latest_tag)
 # Get the lastest version
 if version == None:
-    data = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
-    dataObj = json.loads( data.content )
+    r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
+    r.raise_for_status()
+    dataObj = json.loads( r.content )
     print("url_get_release_latest_tag data obj:" + str(dataObj))
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
