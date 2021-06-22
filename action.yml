@@ -1,19 +1,25 @@
 name: 'testing'
 description: 'test download zip files'
 inputs:
-  token:  # id of input
+  token:  
     description: 'token'
     required: false
-  owner:  # id of input
-    description: 'owner'
+  src_repo: 
+    description: 'src_repo'
+    required: false    
+  aws_access_key_id:  
+    description: 'raws_access_key_id'
+    required: true
+  aws_secret_access_key:
+    description: 'aws_secret_access_key'
     required: true    
-  repo:  # id of input
-    description: 'repo'
-    required: true    
+  s3_bucket:
+    description: 's3_bucket'
+    required: true       
+  s3_bucket_folder:
+    description: 's3_bucket_folder'
+    required: true
+    
 runs:
   using: 'docker'
   image: 'Dockerfile'
-#  args:
-#    - ${{ inputs.token }}
-#    - ${{ inputs.owner }}
-#    - ${{ inputs.repo }}
