@@ -62,55 +62,56 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
 ##################################################
 #Script start here
 ##################################################
-if repo == None:
-    repo = default_repo
+try:
+    if repo == None:
+        repo = default_repo
 
-print ("Download from this repo: "+ repo)
+    print ("Download from this repo: "+ repo)
 
-url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
-#url_download_release_latest = "https://github.com/" + repo + "/archive"
+    url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
 
-# Get version
-if version == None:
-    r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
-    r.raise_for_status()
-    dataObj = json.loads( r.content )
-    print("url_get_release_latest_tag data obj:" + str(dataObj))
-    latestTag = dataObj[ 'tag_name' ]
-    version = latestTag
-    print ( "Get the lastest release version: " + version)
-    zipball_url = dataObj[ 'zipball_url' ] 
-else:
-    zipball_url = "https://api.github.com/repos/" + repo + "/zipball/" + version
-    print ( "Get the old release version: " + version)
-
-download_file_name = version + '.zip'
-
-# download the file to docker container
-dst_download_file_path = os.getcwd()+ '/' + download_file_name
-src_download_file_path = zipball_url
-print("Docker container download from this url: " + src_download_file_path )
-print("Download file to this path in docker container: "+ dst_download_file_path )
-download_url( src_download_file_path , dst_download_file_path )
-
-
-# check file exists in the docker container
-print ("Check file exist in docker container...")
-if os.path.exists(dst_download_file_path):
-    print( "File exists: " + dst_download_file_path )
-    print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
-    # Upload zip file to S3
-    repo_name_arr = repo.split("/")
-    #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
-    file_object_name = repo_name_arr[1] + "/" + download_file_name
-    print("file_object_name: "+  file_object_name )  
-    if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
-        print ("Upload Successful!")
+    # Get version
+    if version == None:
+        r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
+        r.raise_for_status()
+        dataObj = json.loads( r.content )
+        print("url_get_release_latest_tag data obj:" + str(dataObj))
+        latestTag = dataObj[ 'tag_name' ]
+        version = latestTag
+        print ( "Get the lastest release version: " + version)
+        zipball_url = dataObj[ 'zipball_url' ] 
     else:
-        print ("Upload fail!")    
-else:
-    print( "File dose not exist: " + dst_download_file_path )
+        zipball_url = "https://api.github.com/repos/" + repo + "/zipball/" + version
+        print ( "Get the old release version: " + version)
 
+    download_file_name = version + '.zip'
+
+    # download the file to docker container
+    dst_download_file_path = os.getcwd()+ '/' + download_file_name
+    src_download_file_path = zipball_url
+    print("Docker container download from this url: " + src_download_file_path )
+    print("Download file to this path in docker container: "+ dst_download_file_path )
+    download_url( src_download_file_path , dst_download_file_path )
+
+
+    # check file exists in the docker container
+    print ("Check file exist in docker container...")
+    if os.path.exists(dst_download_file_path):
+        print( "File exists: " + dst_download_file_path )
+        print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
+        # Upload zip file to S3
+        repo_name_arr = repo.split("/")
+        #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
+        file_object_name = repo_name_arr[1] + "/" + download_file_name
+        print("file_object_name: "+  file_object_name )  
+        if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
+            print ("Upload Successful!")
+        else:
+            print ("Upload fail!")    
+    else:
+        print( "File dose not exist: " + dst_download_file_path )
+except:
+    print("Unable to upload the file to S3 bucket. ")
 
 
 
