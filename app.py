@@ -90,7 +90,7 @@ download_file_name = version + '.zip'
 # download the file to docker container
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
 src_download_file_path = url_download_release_latest + '/' + download_file_name
-print(" docker container download from this url: " + src_download_file_path )
+print("Docker container download from this url: " + src_download_file_path )
 download_url( src_download_file_path , dst_download_file_path )
 
 
