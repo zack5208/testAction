@@ -27,7 +27,6 @@ print(os.environ)
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
     r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
-    print("Downloard from this ur : " + url)
     print("status code: "+ str(r.status_code))
     r.raise_for_status()
     with open( save_path , 'wb' ) as fd:
@@ -65,14 +64,13 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
 ##################################################
 if repo == None:
     repo = default_repo
-    print ("Use default repo ")
 
-print (" Download from this repo: "+ repo)
+print ("Download from this repo: "+ repo)
 
 url_get_release_latest_tag = "https://api.github.com/repos/" + repo + "/releases/latest"
-url_download_release_latest = "https://github.com/" + repo + "/archive"
-print (url_get_release_latest_tag)
-# Get the lastest version
+#url_download_release_latest = "https://github.com/" + repo + "/archive"
+
+# Get version
 if version == None:
     r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
     r.raise_for_status()
@@ -84,12 +82,12 @@ if version == None:
     zipball_url = dataObj[ 'zipball_url' ] 
 else:
     zipball_url = "https://api.github.com/repos/" + repo + "/zipball/" + version
+    print ( "Get the old release version: " + version)
 
 download_file_name = version + '.zip'
 
 # download the file to docker container
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
-#src_download_file_path = url_download_release_latest + '/' + download_file_name
 src_download_file_path = zipball_url
 print("Docker container download from this url: " + src_download_file_path )
 print("Download file to this path in docker container: "+ dst_download_file_path )
