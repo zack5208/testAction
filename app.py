@@ -17,7 +17,7 @@ ACCESS_KEY = os.getenv('INPUT_AWS_ACCESS_KEY_ID', None)
 SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
 SESSION_TOKEN = os.getenv('INPUT_AWS_SESSION_TOKEN', None)
 s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
-version = os.getenv('INPUT_TAG_VERSION_FILE', None)
+version = os.getenv('INPUT_VERSION', None)
 
 
 
