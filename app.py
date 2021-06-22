@@ -26,8 +26,9 @@ print(os.environ)
 #helper functions
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
-    #r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
-    r = requests.get( url, stream = True)
+    r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
+    print("Downloard from this ur : " + url)
+    print (str(r))
     with open( save_path , 'wb' ) as fd:
         for chunk in r.iter_content( chunk_size = chunk_size ):
             fd.write( chunk )
