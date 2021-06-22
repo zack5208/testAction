@@ -12,12 +12,14 @@ from botocore.exceptions import ClientError
 ##################################################
 token = os.getenv('INPUT_TOKEN', None)
 repo = os.getenv('INPUT_SRC_REPO', None)
+version = os.getenv('INPUT_VERSION', None)
 default_repo = os.getenv('GITHUB_REPOSITORY', None)
 ACCESS_KEY = os.getenv('INPUT_AWS_ACCESS_KEY_ID', None)
 SECRET_KEY =  os.getenv('INPUT_AWS_SECRET_ACCESS_KEY', None)
 SESSION_TOKEN = os.getenv('INPUT_AWS_SESSION_TOKEN', None)
 s3_bucket = os.getenv('INPUT_S3_BUCKET', None)
-version = os.getenv('INPUT_VERSION', None)
+s3_bucket_folder =  os.getenv('INPUT_S3_BUCKET_FOLDER', None)
+
 
 
 
@@ -103,8 +105,10 @@ try:
         print( "File size (bytes): " + str(os.path.getsize(dst_download_file_path)))
         # Upload zip file to S3
         repo_name_arr = repo.split("/")
-        #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
-        file_object_name = repo_name_arr[1] + "/" + download_file_name
+        if s3_bucket_folder == None:
+            file_object_name = repo_name_arr[1] + "/" + download_file_name
+        else:
+            file_object_name = s3_bucket_folder + "/" + repo_name_arr[1] + "/" + download_file_name    
         print("file_object_name: "+  file_object_name )  
         print("Upload to s3_bucket: "+ s3_bucket)
         if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
