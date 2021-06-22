@@ -3,7 +3,7 @@
 import requests
 import json
 import os
-import logging
+#import logging
 import boto3
 from botocore.exceptions import ClientError
 
@@ -57,8 +57,9 @@ def upload_file(file_name, bucket,ACCESS_KEY ,SECRET_KEY,SESSION_TOKEN, object_n
     try:
         response = s3_client.upload_file(file_name, bucket, object_name)
     except ClientError as e:
-        logging.error(e)
-        return False
+        #logging.error(e)
+        raise ClientError
+#        return False
     return True            
 
 ##################################################
