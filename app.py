@@ -84,12 +84,14 @@ if version == None:
     latestTag = dataObj[ 'tag_name' ]
     version = latestTag
     print ( "Get the lastest release version: " + version)
+    zipball_url = dataObj[ 'zipball_url' ] 
 
 download_file_name = version + '.zip'
 
 # download the file to docker container
 dst_download_file_path = os.getcwd()+ '/' + download_file_name
-src_download_file_path = url_download_release_latest + '/' + download_file_name
+#src_download_file_path = url_download_release_latest + '/' + download_file_name
+src_download_file_path = zipball_url
 print("dst: "+ dst_download_file_path )
 print("src: "+ src_download_file_path)
 print("Docker container download from this url: " + src_download_file_path )
