@@ -28,7 +28,8 @@ print(os.environ)
 #helper functions
 ##################################################
 def download_url( url , save_path, chunk_size=128 ):
-    r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
+#    r = requests.get( url, stream = True, headers={ 'Authorization' : 'token '+ token })
+    r = requests.get( url, stream = True)
     print("status code: "+ str(r.status_code))
     r.raise_for_status()
     with open( save_path , 'wb' ) as fd:
@@ -76,8 +77,7 @@ try:
     # Get version
     if version == None:
         print("Get version from this url :"+ url_get_release_latest_tag)
-        #r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
-        r = requests.get( url_get_release_latest_tag )
+        r = requests.get( url_get_release_latest_tag , headers = { 'Authorization' : 'token ' + token })
         print("status code: "+ str(r.status_code))
         r.raise_for_status()
         dataObj = json.loads( r.content )
