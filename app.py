@@ -106,6 +106,7 @@ try:
         #file_object_name = repo_name_arr[0] + "-" + repo_name_arr[1] + "-" + download_file_name
         file_object_name = repo_name_arr[1] + "/" + download_file_name
         print("file_object_name: "+  file_object_name )  
+        print("Upload to s3_bucket: "+ s3_bucket)
         if upload_file(dst_download_file_path,s3_bucket,ACCESS_KEY,SECRET_KEY,SESSION_TOKEN,file_object_name):
             print ("Upload Successful!")
         else:
